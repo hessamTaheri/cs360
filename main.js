@@ -59,7 +59,7 @@ function captureImage() {
     //     video: true
     // };
 
-    
+
     // const constraints = {
     //     facingMode: { exact: "environment" },
     //   };
@@ -102,10 +102,10 @@ function captureImage() {
                     document.getElementById('colorCode').innerText = `it seems good`;
                     console.log(`${closestColorCode}`)
                 }else if (closestColorCode == "#946d42") {
-                    document.getElementById('colorCode').innerText = `we advice is better to change`;
+                    document.getElementById('colorCode').innerText = `We recommend that it is better to change`;
                     console.log(`${closestColorCode}`)
                 }else if (closestColorCode == "#2e1403") {
-                    document.getElementById('colorCode').innerText = `it is out of used and you should change the water ASAP`;
+                    document.getElementById('colorCode').innerText = `It is unusable and you should change the water as soon as possible`;
                     console.log(`${closestColorCode}`)
             }else {
                 document.getElementById('colorCode').innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: "the color not in renge"`;
