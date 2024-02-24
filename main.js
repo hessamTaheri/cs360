@@ -1,9 +1,7 @@
 function captureImage() {
     const constraints = {
-        video: {
-            facingMode: 'environment' // Use the back-facing camera
-        }
-    };
+        facingMode: { exact: "environment" },
+      };
 
     navigator.mediaDevices.getUserMedia(constraints)
         .then(function (stream) {
@@ -114,10 +112,4 @@ function captureImage() {
 
 function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-}
-
-if (condition) {
-    
-} else {
-    
 }
