@@ -51,8 +51,15 @@ const colorTable = [
 
 function captureImage() {
     const constraints = {
-        video: true
-    };
+        video: {
+            facingMode: 'environment' // Use the back-facing camera
+        }
+    }
+    // const constraints = {
+    //     video: true
+    // };
+
+    
     // const constraints = {
     //     facingMode: { exact: "environment" },
     //   };
