@@ -1,3 +1,32 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera Web App</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #preview {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quality Diagnose CS360</h1>
+        <img src="sample.png" alt="CS360" width="300" height="400">    
+        <button onclick="captureImage()">click Capture Image until you get the best one</button>
+        <p style="font-weight: bold;font-size: 30px;" id="colorCode"></p>
+        <canvas id="canvas"></canvas>
+        <p>Take a good quality photo of your CS360 with a white paper behind it and then click on the corresponding image to get my instructions:</p>
+
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
 <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,7 +47,7 @@
 </html> -->
 
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -40,4 +69,4 @@
     <p id="colorCode"></p>
     <script src="main.js"></script>
 </body>
-</html>
+</html> -->

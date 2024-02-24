@@ -53,12 +53,12 @@ const colorTable = [
 ];
 
 function captureImage() {
-    // const constraints = {
-    //     video: true
-    // };
     const constraints = {
-        facingMode: { exact: "environment" },
-      };
+        video: true
+    };
+    // const constraints = {
+    //     facingMode: { exact: "environment" },
+    //   };
 
     navigator.mediaDevices.getUserMedia(constraints)
         .then(function (stream) {
