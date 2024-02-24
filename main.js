@@ -1,6 +1,8 @@
 function captureImage() {
     const constraints = {
-        video: true
+        video: {
+            facingMode: 'environment' // Use the back-facing camera
+        }
     };
 
     navigator.mediaDevices.getUserMedia(constraints)
