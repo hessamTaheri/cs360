@@ -91,10 +91,10 @@ function captureImage() {
 
                 const closestColorCode = rgbToHex(closestColor[0], closestColor[1], closestColor[2]);
                 // document.getElementById('colorCode').innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: ${closestColorCode}`;
-                if (closestColorCode == "#946d42") {
+                if (closestColorCode == "#faeed6") {
                     document.getElementById('colorCode').innerText = `it seems good`;
                     console.log(`${closestColorCode}`)
-                }else if (closestColorCode == "#faeed6") {
+                }else if (closestColorCode == "#946d42") {
                     document.getElementById('colorCode').innerText = `we advice is better to change`;
                     console.log(`${closestColorCode}`)
                 }else if (closestColorCode == "#2e1403") {
