@@ -73,8 +73,8 @@ function captureImage() {
             video.srcObject = stream;
             video.onloadedmetadata = function (e) {
                 video.play();
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
+                canvas.width = 350;
+                canvas.height = 270;
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
             };
 
@@ -97,6 +97,7 @@ function captureImage() {
                 }
 
                 const closestColorCode = rgbToHex(closestColor[0], closestColor[1], closestColor[2]);
+                document.getElementById("sample").style.display = "none";
                 // document.getElementById('colorCode').innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: ${closestColorCode}`;
                 if (closestColorCode == "#faeed6") {
                     document.getElementById('colorCode').innerText = `it seems good`;

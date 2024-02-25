@@ -1,11 +1,10 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Web App</title>
+    <title>Quality Diagnose CS360</title>
     <link rel="stylesheet" href="style.css">
     <style>
         #preview {
@@ -14,59 +13,19 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Quality Diagnose CS360</h1>
-        <img src="sample.png" alt="CS360" width="300" height="400">    
-        <button onclick="captureImage()">click Capture Image until you get the best one</button>
+        <p>With a piece of white paper behind your CS360, click on Capture Image and take the best shot of it, then
+            click on the image like in the example to get my instructions:</p>
+        <canvas height="0" id="canvas"></canvas>
+        <button onclick="captureImage()">Capture Image</button>
+        <img id="sample" src="sample.png" alt="CS360" width="100%" height="auto">
         <p style="font-weight: bold;font-size: 30px;" id="colorCode"></p>
-        <canvas id="canvas"></canvas>
-        <p>Take a good quality photo of your CS360 with a white paper behind it and then click on the corresponding image to get my instructions:</p>
 
     </div>
     <script src="main.js"></script>
 </body>
+
 </html>
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-<body>
-    <label for="selfie">Take a picture of your face:</label>
-
-<input type="file" id="selfie" name="selfie" accept="image/*" capture="user" />
-
-<label for="picture">Take a picture using back facing camera:</label>
-
-<input type="file" id="picture" name="picture" accept="image/*" capture="environment" />
-</body>
-</html> -->
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Web App</title>
-    <style>
-        #preview {
-            width: 100%;
-            height: auto;
-        }
-    </style>
-</head>
-<body>
-    <h1>Quality Diagnose CS360 </h1>
-    <img src="sample.png" alt="CS360" width="500" height="600">    
-    <button onclick="captureImage()">click Capture Image until you get the best one</button>
-    <canvas id="canvas"></canvas>
-    <p>Take a good quality photo of your CS360 with a white paper behind it and then click on the corresponding image to get my instructions:</p>
-    <p id="colorCode"></p>
-    <script src="main.js"></script>
-</body>
-</html> -->
