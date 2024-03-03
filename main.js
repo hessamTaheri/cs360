@@ -1,36 +1,3 @@
-// function captureImage() {
-//     const constraints = {
-//         facingMode: { exact: "environment" },
-//       };
-
-//     navigator.mediaDevices.getUserMedia(constraints)
-//         .then(function (stream) {
-//             const video = document.createElement('video');
-//             const canvas = document.getElementById('canvas');
-//             const context = canvas.getContext('2d');
-
-//             video.srcObject = stream;
-//             video.onloadedmetadata = function (e) {
-//                 video.play();
-//                 canvas.width = video.videoWidth;
-//                 canvas.height = video.videoHeight;
-//                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
-//             };
-
-//             canvas.addEventListener('click', function (e) {
-//                 const x = e.offsetX;
-//                 const y = e.offsetY;
-//                 const pixelData = context.getImageData(x, y, 1, 1).data;
-//                 const colorCode = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
-//                 document.getElementById('colorCode').innerText = `Color code at point (${x}, ${y}): ${colorCode}`;
-//             });
-//         })
-//         .catch(function (err) {
-//             console.error('Error accessing the camera.', err);
-//         });
-// }
-
-
 function calculateDistance(color1, color2) {
     const r1 = color1[0];
     const g1 = color1[1];
@@ -55,14 +22,6 @@ function captureImage() {
             facingMode: 'environment' // Use the back-facing camera
         }
     }
-    // const constraints = {
-    //     video: true
-    // };
-
-
-    // const constraints = {
-    //     facingMode: { exact: "environment" },
-    //   };
 
     navigator.mediaDevices.getUserMedia(constraints)
         .then(function (stream) {
@@ -121,3 +80,35 @@ function captureImage() {
 function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const torchButton = document.getElementById("torchButton");
+  
+    torchButton.addEventListener("click", async function() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+        const track = stream.getVideoTracks()[0];
+        const imageCapture = new ImageCapture(track);
+  
+        const capabilities = imageCapture.getPhotoCapabilities().then((capabilities) => {
+          if (capabilities.fillLightMode.includes('flash')) {
+            const torchEnabled = track.getSettings().torch || false;
+            if (torchEnabled) {
+              track.applyConstraints({
+                advanced: [{ torch: false }]
+              });
+            } else {
+              track.applyConstraints({
+                advanced: [{ torch: true }]
+              });
+            }
+          } else {
+            console.warn('Torch mode not supported.');
+          }
+        });
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+      }
+    });
+  });
