@@ -89,24 +89,35 @@ document.addEventListener("DOMContentLoaded", function() {
       try {
         const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
         const track = stream.getVideoTracks()[0];
-        const imageCapture = new ImageCapture(track);
   
-        const capabilities = imageCapture.getPhotoCapabilities().then((capabilities) => {
-          if (capabilities.fillLightMode.includes('flash')) {
-            const torchEnabled = track.getSettings().torch || false;
-            if (torchEnabled) {
-              track.applyConstraints({
-                advanced: [{ torch: false }]
-              });
-            } else {
-              track.applyConstraints({
-                advanced: [{ torch: true }]
-              });
-            }
-          } else {
-            console.warn('Torch mode not supported.');
-          }
-        });
+        if (!track) {
+          console.error('No video track available.');
+          return;
+        }
+  
+        if (!("getPhotoCapabilities" in ImageCapture.prototype)) {
+          console.warn("ImageCapture API is not supported by this browser.");
+          return;
+        }
+  
+        const imageCapture = new ImageCapture(track);
+        const capabilities = await imageCapture.getPhotoCapabilities();
+  
+        if (!capabilities.fillLightMode.includes('flash')) {
+          console.warn('Torch mode is not supported by this device.');
+          return;
+        }
+  
+        const torchEnabled = track.getSettings().torch || false;
+        if (torchEnabled) {
+          await track.applyConstraints({
+            advanced: [{ torch: false }]
+          });
+        } else {
+          await track.applyConstraints({
+            advanced: [{ torch: true }]
+          });
+        }
       } catch (error) {
         console.error('Error accessing camera:', error);
       }
