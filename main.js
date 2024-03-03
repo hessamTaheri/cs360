@@ -66,6 +66,7 @@ function captureImage() {
                     console.log(`${closestColorCode}`)
                 }else if (closestColorCode == "#2e1403") {
                     document.getElementById('colorCode').innerText = `It is unusable and you should change the water as soon as possible`;
+                    alert("It is unusable and you should change the water as soon as possible")
                     console.log(`${closestColorCode}`)
             }else {
                 document.getElementById('colorCode').innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: "the color not in renge"`;
@@ -80,46 +81,3 @@ function captureImage() {
 function rgbToHex(r, g, b) {
     return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
-
-
-document.addEventListener("DOMContentLoaded", function() {
-    const torchButton = document.getElementById("torchButton");
-  
-    torchButton.addEventListener("click", async function() {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-        const track = stream.getVideoTracks()[0];
-  
-        if (!track) {
-          console.error('No video track available.');
-          return;
-        }
-  
-        if (!("getPhotoCapabilities" in ImageCapture.prototype)) {
-          console.warn("ImageCapture API is not supported by this browser.");
-          return;
-        }
-  
-        const imageCapture = new ImageCapture(track);
-        const capabilities = await imageCapture.getPhotoCapabilities();
-  
-        if (!capabilities.fillLightMode.includes('flash')) {
-          console.warn('Torch mode is not supported by this device.');
-          return;
-        }
-  
-        const torchEnabled = track.getSettings().torch || false;
-        if (torchEnabled) {
-          await track.applyConstraints({
-            advanced: [{ torch: false }]
-          });
-        } else {
-          await track.applyConstraints({
-            advanced: [{ torch: true }]
-          });
-        }
-      } catch (error) {
-        console.error('Error accessing camera:', error);
-      }
-    });
-  });
