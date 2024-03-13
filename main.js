@@ -1,83 +1,110 @@
 function calculateDistance(color1, color2) {
-    const r1 = color1[0];
-    const g1 = color1[1];
-    const b1 = color1[2];
+  const r1 = color1[0];
+  const g1 = color1[1];
+  const b1 = color1[2];
 
-    const r2 = color2[0];
-    const g2 = color2[1];
-    const b2 = color2[2];
+  const r2 = color2[0];
+  const g2 = color2[1];
+  const b2 = color2[2];
 
-    return Math.sqrt(Math.pow(r2 - r1, 2) + Math.pow(g2 - g1, 2) + Math.pow(b2 - b1, 2));
+  return Math.sqrt(
+    Math.pow(r2 - r1, 2) + Math.pow(g2 - g1, 2) + Math.pow(b2 - b1, 2)
+  );
 }
 
 const colorTable = [
-    [250,238,214],
-    [148,109,66],
-    [46,20,3]
+  [202, 202, 202], // #cacaca light
+  [151, 151, 151], // #979797
+  [70, 59, 41], // #463b29
+  [46, 41, 1], // #2e2901
+  [24, 24, 24], // #181818 dark
 ];
 
 function captureImage() {
-    const constraints = {
-        video: {
-            facingMode: 'environment' // Use the back-facing camera
+  const constraints = {
+    video: {
+      facingMode: "environment", // Use the back-facing camera
+    },
+  };
+  const colorNames = ["#cacaca", "#979797", "#463b29", "#2e2901", "#181818"];
+  let minDistance = Number.MAX_SAFE_INTEGER;
+  let closestColorIndex = null;
+
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then(function (stream) {
+      const video = document.createElement("video");
+      const canvas = document.getElementById("canvas");
+      const context = canvas.getContext("2d");
+
+      video.srcObject = stream;
+      video.onloadedmetadata = function (e) {
+        video.play();
+        canvas.width = 350;
+        canvas.height = 270;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      };
+
+      canvas.addEventListener("click", function (e) {
+        const x = e.offsetX;
+        const y = e.offsetY;
+        const pixelData = context.getImageData(x, y, 1, 1).data;
+        const colorCode = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
+        const selectedColor = [pixelData[0], pixelData[1], pixelData[2]];
+
+        let minDistance = Number.MAX_SAFE_INTEGER;
+        let closestColorIndex = null;
+
+        for (let i = 0; i < colorTable.length; i++) {
+          const color = colorTable[i];
+          const distance = calculateDistance(selectedColor, color);
+          if (distance < minDistance) {
+            minDistance = distance;
+            closestColorIndex = i;
+          }
         }
-    }
+        const closestColorCode = colorNames[closestColorIndex];
 
-    navigator.mediaDevices.getUserMedia(constraints)
-        .then(function (stream) {
-            const video = document.createElement('video');
-            const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
-
-            video.srcObject = stream;
-            video.onloadedmetadata = function (e) {
-                video.play();
-                canvas.width = 350;
-                canvas.height = 270;
-                context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            };
-
-            canvas.addEventListener('click', function (e) {
-                const x = e.offsetX;
-                const y = e.offsetY;
-                const pixelData = context.getImageData(x, y, 1, 1).data;
-                const colorCode = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
-                const selectedColor = [pixelData[0], pixelData[1], pixelData[2]];
-
-                let minDistance = Number.MAX_SAFE_INTEGER;
-                let closestColor = null;
-
-                for (const color of colorTable) {
-                    const distance = calculateDistance(selectedColor, color);
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestColor = color;
-                    }
-                }
-
-                const closestColorCode = rgbToHex(closestColor[0], closestColor[1], closestColor[2]);
-                document.getElementById("sample").style.display = "none";
-                // document.getElementById('colorCode').innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: ${closestColorCode}`;
-                if (closestColorCode == "#faeed6") {
-                    document.getElementById('colorCode').innerText = `it seems good`;
-                    console.log(`${closestColorCode}`)
-                }else if (closestColorCode == "#946d42") {
-                    document.getElementById('colorCode').innerText = `We recommend that it is better to change`;
-                    console.log(`${closestColorCode}`)
-                }else if (closestColorCode == "#2e1403") {
-                    document.getElementById('colorCode').innerText = `It is unusable and you should change the water as soon as possible`;
-                    alert("It is unusable and you should change the water as soon as possible")
-                    console.log(`${closestColorCode}`)
-            }else {
-                document.getElementById('colorCode').innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: "the color not in renge"`;
-                }
-            });
-        })
-        .catch(function (err) {
-            console.error('Error accessing the camera.', err);
-        });
+        document.getElementById("sample").style.display = "none";
+        // document.getElementById('colorCode').innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: ${closestColorCode}`;
+        if (closestColorCode == "#cacaca") {
+          document.getElementById("colorCode").innerText = `perfect`;
+          console.log(`${closestColorCode}`);
+        } else if (closestColorCode == "#979797") {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `moderate`;
+          console.log(`${closestColorCode}`);
+        } else if (closestColorCode == "#463b29") {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `service required We recommend that it is better to change`;
+          console.log(`${closestColorCode}`);
+        } else if (closestColorCode == "#2e2901") {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `poor water quality We recommend that it is better to change`;
+          console.log(`${closestColorCode}`);
+        } else if (closestColorCode == "#181818") {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `It is unusable and you should change the water as soon as possible`;
+        //   alert(
+        //     "system failure imminent"
+        //   );
+          console.log(`${closestColorCode}`);
+        } else {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: "the color not in renge"`;
+        }
+      });
+    })
+    .catch(function (err) {
+      console.error("Error accessing the camera.", err);
+    });
 }
 
 function rgbToHex(r, g, b) {
-    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
