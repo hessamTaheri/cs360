@@ -27,8 +27,6 @@ function captureImage() {
     },
   };
   const colorNames = ["#cacaca", "#979797", "#463b29", "#2e2901", "#181818"];
-  let minDistance = Number.MAX_SAFE_INTEGER;
-  let closestColorIndex = null;
 
   navigator.mediaDevices
     .getUserMedia(constraints)
@@ -89,9 +87,9 @@ function captureImage() {
           document.getElementById(
             "colorCode"
           ).innerText = `It is unusable and you should change the water as soon as possible`;
-        //   alert(
-        //     "system failure imminent"
-        //   );
+          alert(
+            "system failure imminent"
+          );
           console.log(`${closestColorCode}`);
         } else {
           document.getElementById(
