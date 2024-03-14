@@ -106,3 +106,109 @@ function captureImage() {
 function rgbToHex(r, g, b) {
   return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
 }
+
+function calculateDistanceFromImage(pixelData, colorTable) {
+    const selectedColor = [pixelData[0], pixelData[1], pixelData[2]];
+
+    let minDistance = Number.MAX_SAFE_INTEGER;
+    let closestColorIndex = null;
+
+    for (let i = 0; i < colorTable.length; i++) {
+        const color = colorTable[i];
+        const distance = calculateDistance(selectedColor, color);
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestColorIndex = i;
+        }
+    }
+
+    return closestColorIndex;
+}
+
+
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    const colorNames = ["#cacaca", "#979797", "#463b29", "#2e2901", "#181818"];
+    document.getElementById("sample").style.display = "none";
+    // Check if file is selected
+    if (file) {
+        const reader = new FileReader();
+
+        // Read the file as Data URL
+        reader.readAsDataURL(file);
+
+        // Function to handle file load event
+        reader.onload = function(event) {
+            const preview = document.getElementById('preview');
+            const img = document.createElement('img');
+            img.setAttribute("width", "100%");
+            img.setAttribute("id", "img");
+            img.src = event.target.result;
+
+            // Append the image to the preview div
+            preview.innerHTML = '';
+            preview.appendChild(img);
+
+            // Process the image
+            img.addEventListener("click", function (e) {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                context.drawImage(img, 0, 0);
+
+                const x = e.offsetX;
+                const y = e.offsetY;
+                const pixelData = context.getImageData(x, y, 1, 1).data;
+                const colorCode = rgbToHex(pixelData[0], pixelData[1], pixelData[2]);
+                const selectedColor = [pixelData[0], pixelData[1], pixelData[2]];
+
+
+console.log(pixelData)
+                // Find closest color index
+                const closestColorIndex = calculateDistanceFromImage(pixelData, colorTable);
+                // Use the closest color index to determine the color code
+                const closestColorCode = colorNames[closestColorIndex];
+
+
+                // Handle the closest color code as required
+        // document.getElementById('colorCode').innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: ${closestColorCode}`;
+        if (closestColorCode == "#cacaca") {
+          document.getElementById("colorCode").innerText = `perfect`;
+          console.log(`${closestColorCode}`);
+        } else if (closestColorCode == "#979797") {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `moderate`;
+          console.log(`${closestColorCode}`);
+        } else if (closestColorCode == "#463b29") {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `service required We recommend that it is better to change`;
+          console.log(`${closestColorCode}`);
+        } else if (closestColorCode == "#2e2901") {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `poor water quality We recommend that it is better to change`;
+          console.log(`${closestColorCode}`);
+        } else if (closestColorCode == "#181818") {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `It is unusable and you should change the water as soon as possible`;
+          alert(
+            "system failure imminent"
+          );
+          console.log(`${closestColorCode}`);
+        } else {
+          document.getElementById(
+            "colorCode"
+          ).innerText = `Color code at point (${x}, ${y}): ${colorCode}. Closest color: "the color not in renge"`;
+        }
+            });
+        }
+    }
+}
+
+  // Add event listener to file input element
+  const fileInput = document.getElementById('fileInput');
+  fileInput.addEventListener('change', handleFileSelect);
