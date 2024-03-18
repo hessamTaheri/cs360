@@ -38,8 +38,8 @@ function captureImage() {
       video.srcObject = stream;
       video.onloadedmetadata = function (e) {
         video.play();
-        canvas.width = 350;
-        canvas.height = 270;
+        canvas.width = 251;
+        canvas.height = 346;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
       };
 
