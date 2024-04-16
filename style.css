@@ -5,6 +5,30 @@ body {
   padding: 0;
 }
 
+video  {
+  width: 80%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+#capture  {
+  width: 80%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+#capturedImage {
+  width: 80%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
 .container {
   max-width: 800px;
   margin: 50px auto;
@@ -51,4 +75,66 @@ button:hover {
   margin: 20px auto;
   display: block;
   border-radius: 10px;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  border: 10px solid transparent; /* Set the initial border width */
+  padding: 10px; /* Adjust padding to maintain space for the border */
+  border-image: linear-gradient(to right top, #000000, #ffffff, #000000) 1;
+  /* Adjust the gradient direction and colors as needed */
+}
+
+.image-container img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.guideline {
+  position: absolute;
+  top: 50px;
+  left: 100px;
+  width: 50%;
+  height: 70%;
+  border: 2px solid rgba(0, 0, 0, 0.5); /* Adjust color and thickness as needed */
+  box-sizing: border-box;
+}
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.center-point {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.center-point::before,
+.center-point::after {
+  content: "";
+  position: absolute;
+  background-color: black; /* Adjust color as needed */
+}
+
+.center-point::before {
+  top: -10px; /* Adjust the length of the horizontal line */
+  left: -1px;
+  width: 2px; /* Adjust thickness as needed */
+  height: 20px; /* Adjust the length of the horizontal line */
+}
+
+.center-point::after {
+  top: -1px;
+  left: -10px; /* Adjust the length of the vertical line */
+  width: 20px; /* Adjust the length of the vertical line */
+  height: 2px; /* Adjust thickness as needed */
 }

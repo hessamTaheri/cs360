@@ -12,18 +12,46 @@
 </head>
 
 <body>
-    <div class="container">
+    <div>
+        <video id="myVideo" controls autoplay>
+            <source src="galaxy.mp4" type="video/mp4">
+            <!-- Include additional source elements for different video formats -->
+            <!-- <source src="path_to_your_video.webm" type="video/webm"> -->
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div >
+     <img id="capture" src="capture.png" alt="capture" style="display: none;">
+    </div>
+    <div id="page" class="container" style="display: none;">
         <h1>Quality Diagnose CS360</h1>
         <p>With a piece of white paper behind your CS360, click on Capture Image and take the best shot of it, then
             click on the image like in the example to get my instructions:</p>
+            <p style="font-weight: bold;font-size: 30px;" id="colorCode"></p>
         <canvas height="0" id="canvas"></canvas>
-        <button onclick="captureImage()">Capture Image</button>
-        <img id="sample" src="sample.png" alt="CS360" width="100%" height="auto">
-        <p style="font-weight: bold;font-size: 30px;" id="colorCode"></p>
+        <button onclick="captureImage()" style="display: block;">Capture Image</button>
+        <div id="imageContainer">
+            <!-- Placeholder image -->
+            <img  id="capturedImage" src="placeholder.jpg" alt="Captured Image">
+        </div>
+        
         <input type="file" accept="image/*" capture="camera" id="fileInput">
         <div width="100%" height="auto" id="preview"></div>
-
+        <div class="image-container" style="display: none;">
+            <img src="sample.png" alt="Your Image">
+            <div class="center-point"></div>
+            <div class="guideline"></div>
+          </div>
     </div>
+        <!-- Image element -->
+        </div>
+        <img onclick="processImage()" id="sourceImage" src="path_to_your_image.jpg" alt="Source Image">
+
+        <!-- Canvas element for drawing and processing -->
+        <canvas id="canvas1"></canvas>
+    
+        <!-- Display the result -->
+        <div id="colorCode"></div>
     <script src="main.js"></script>
 </body>
 
