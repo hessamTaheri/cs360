@@ -251,10 +251,17 @@ fileInput.addEventListener("change", function () {
 // const fileInput = document.getElementById('fileInput');
 // capturedImage.addEventListener("click", handleFileSelect);
 function processImage() {
-  console.log("first")
-  const canvas = document.getElementById("canvas1");
+
+document.getElementById("capture").style.display = "none";
+document.getElementById("capturedImage").style.display = "none";
+document.getElementById("button").style.display = "none";
+document.getElementById("fileInput").style.display = "none";
+
+
+
+  const canvas = document.getElementById("canvas");
   const context = canvas.getContext("2d");
-  const img = document.getElementById("sourceImage"); // Get the <img> tag element
+  const img = document.getElementById("capturedImage"); // Get the <img> tag element
 
   // Ensure the image is loaded before processing
   if (img.complete) {
@@ -274,7 +281,7 @@ function processImage() {
       [24, 24, 24]     // #181818
     ];
     const colorNames = ["#cacaca", "#979797", "#463b29", "#2e2901", "#181818"];
-
+    console.log("first")
     // Handle click event on the canvas
     canvas.addEventListener("click", function (e) {
       const x = e.offsetX;

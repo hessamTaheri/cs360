@@ -29,10 +29,10 @@
             click on the image like in the example to get my instructions:</p>
             <p style="font-weight: bold;font-size: 30px;" id="colorCode"></p>
         <canvas height="0" id="canvas"></canvas>
-        <button onclick="captureImage()" style="display: block;">Capture Image</button>
+        <button id="button" onclick="captureImage()" style="display: block;">Capture Image</button>
         <div id="imageContainer">
             <!-- Placeholder image -->
-            <img  id="capturedImage" src="placeholder.jpg" alt="Captured Image">
+            <img onclick="processImage()" id="capturedImage" src="placeholder.jpg" >
         </div>
         
         <input type="file" accept="image/*" capture="camera" id="fileInput">
@@ -45,13 +45,13 @@
     </div>
         <!-- Image element -->
         </div>
-        <img onclick="processImage()" id="sourceImage" src="path_to_your_image.jpg" alt="Source Image">
+        <!-- <img id="sourceImage" src="path_to_your_image.jpg" alt="Source Image"> -->
 
         <!-- Canvas element for drawing and processing -->
-        <canvas id="canvas1"></canvas>
+        <!-- <canvas id="canvas1"></canvas> -->
     
         <!-- Display the result -->
-        <div id="colorCode"></div>
+        <!-- <div id="colorCode"></div> -->
     <script src="main.js"></script>
 </body>
 
